@@ -30,7 +30,7 @@ import streamlit as st #app deployment
 
 #Introduction
 
-st.title('DSBA - Exam project')
+st.title('DSBA - Exam project :car:')
 
 #image of a cool car
 image_url = requests.get('https://raw.githubusercontent.com/IIPeteII/car-license-plate-recognition-clean/main/app-images/app_lambo.jpg')
