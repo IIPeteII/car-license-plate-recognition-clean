@@ -31,7 +31,7 @@ import streamlit as st #app deployment
 #Introduction
 
 st.title('Car number plate detection')
-app_image = Image.open(r'https://github.com/IIPeteII/car-license-plate-recognition-clean/blob/b400547cb94976b2921b31bf974208b5edd8ea74/app-images/app_lambo_front.jpg')
+app_image = Image.open('https://github.com/IIPeteII/car-license-plate-recognition-clean/blob/b400547cb94976b2921b31bf974208b5edd8ea74/app-images/app_lambo_front.jpg')
 st.image(app_image, caption='Credits to https://unsplash.com/@reinhartjulian for the picture')
 st.header('Detecting license plates and returning an image of the car')
 
