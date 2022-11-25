@@ -9,7 +9,8 @@ import numpy as np #Functions
 import requests
 import altair as alt #Visualizations
 import io #Buffers for DF's
-from io import BytesIO
+from io import BytesIO #BytesIO
+from io import StringIO #StringIO
 import http.client #API
 import os #operating system functions
 from PIL import Image #open pictures
@@ -18,7 +19,7 @@ from PIL import Image #open pictures
 #import datetime #dates and time stuff
 
 #ML/Computer Vision
-#import cv2 #computer vision
+import cv2 #computer vision
 #import tensorflow as tf #tensorflow
 #from keras.preprocessing.image import ImageDataGenerator #generate
 #from keras.models import Sequential #sequential model
@@ -39,16 +40,51 @@ st.image(app_image, caption='Credits to https://unsplash.com/@reinhartjulian for
 
 #header for the project
 st.header('What does it do?')
-st.markdown('This is an app that regonizes and detects license plates in images, then return an image of the car model.\
+st.markdown('This is an app that _regonizes_ and **detects** license plates in images, then return an image of the car model.\
     The app takes the string of the license plate and searches for it in the Danish license plate database, which then returns information such as brand, model and year.\
     Thereafter, the app goes through a large dataset of car models and returns an image of the car, if the car is not in the dataset - a google search is performed.')
 
 #------------ License plate detection
-st.subheader('license plate detection model')
+st.subheader('License plate detection model')
+st.markdown('Upload your picture in the box below, or take a picture with your phone')
 
-#Need a contigency as to whether we upload or take a picture!
-#st.text, st.camera_input("Take a picture"), st.file_uploader("Upload picture")
+#upload a picture
+st.markdown('Upload a file')
+uploaded_file = st.file_uploader("Choose a file")
+if uploaded_file is not None:
+    # To read file as bytes:
+    bytes_data = uploaded_file.getvalue()
+    st.write(bytes_data)
 
+    # To convert to a string based IO:
+    stringio = StringIO(uploaded_file.getvalue().decode("utf-8"))
+    st.write(stringio)
+
+    # To read file as string:
+    string_data = stringio.read()
+    st.write(string_data)
+
+    # Can be used wherever a "file-like" object is accepted:
+    dataframe = pd.read_csv(uploaded_file)
+    st.write(dataframe)
+
+
+st.markdown('take a picture')
+#take a picture
+img_file_buffer = st.camera_input("Take a picture")
+
+if img_file_buffer is not None:
+    # To read image file buffer with OpenCV:
+    bytes_data = img_file_buffer.getvalue()
+    cv2_img = cv2.imdecode(np.frombuffer(bytes_data, np.uint8), cv2.IMREAD_COLOR)
+
+    # Check the type of cv2_img:
+    # Should output: <class 'numpy.ndarray'>
+    st.write(type(cv2_img))
+
+    # Check the shape of cv2_img:
+    # Should output shape: (height, width, channels)
+    st.write(cv2_img.shape)
 
 #------------ API-integration to database
 st.subheader('API-call from Danish license plate database')
