@@ -44,8 +44,8 @@ st.markdown('This is an app that _regonizes_ and **detects** license plates in i
     The app takes the string of the license plate and searches for it in the Danish license plate database, which then returns information such as brand, model and year.\
     Thereafter, the app goes through a large dataset of car models and returns an image of the car, if the car is not in the dataset - a google search is performed.')
 
-#------------ License plate detection
-st.subheader('License plate detection model')
+#------------ Data input
+st.subheader('Input a picture')
 st.markdown('Upload your picture in the box below, or take a picture with your phone')
 
 #upload a picture
@@ -82,6 +82,8 @@ if img_file_buffer is not None:
     # Check the shape of cv2_img:
     # Should output shape: (height, width, channels)
     st.write(cv2_img.shape)
+
+#------------ License plate detection model
 
 #------------ API-integration to database
 st.subheader('API-call from Danish license plate database')
