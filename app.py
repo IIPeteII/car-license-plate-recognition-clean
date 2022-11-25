@@ -30,8 +30,9 @@ import streamlit as st #app deployment
 
 #Introduction
 
-st.title('DSBA 2022 - Car number plate detection')
-st.header('detecting license plates and returning an image of the car')
+st.title('Car number plate detection')
+st.image('C:\Users\Peter\Documents\GitHub\car-license-plate-recognition-clean\app-images\app_lambo_front.jpg', caption='Credits to https://unsplash.com/@reinhartjulian for the picture')
+st.header('Detecting license plates and returning an image of the car')
 
 
 #------------ License plate detection
