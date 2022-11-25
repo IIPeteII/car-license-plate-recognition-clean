@@ -26,9 +26,6 @@ from keras import optimizers #model optimizers such as Adam and learning rates
 #Deployment
 import streamlit as st #app deployment
 
-
-
-
 #------------ License plate detection
 
 #------------ API-integration to database
