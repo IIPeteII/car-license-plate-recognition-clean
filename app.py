@@ -35,13 +35,17 @@ st.header('detecting license plates and returning an image of the car')
 
 
 #------------ License plate detection
-st.markdown('license plate detection model')
+st.subheader('license plate detection model')
+
+#Need a contigency as to whether we upload or take a picture!
+#st.text, st.camera_input("Take a picture"), st.file_uploader("Upload picture")
+
 
 #------------ API-integration to database
-st.markdown('API-call from Danish license plate database')
+st.subheader('API-call from Danish license plate database')
 
 #------------ Picture database output
-st.markdown('Picture of car from dataset')
+st.subheader('Picture of car from dataset')
 
 #------------ Google search
-st.markdown('Link to google of car')
+st.subheader('Link to google of car')
