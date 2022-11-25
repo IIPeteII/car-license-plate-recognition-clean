@@ -10,7 +10,7 @@ import altair as alt #Visualizations
 import io #Buffers for DF's
 import http.client #API
 import os #operating system functions
-from selenium import webdriver #google search
+#from selenium import webdriver #google search
 import chromedriver_autoinstaller #chrome driver to open a browser
 from PIL import image #open pictures
 from pathlib import Path #path function
