@@ -49,8 +49,7 @@ st.subheader('License plate detection model')
 st.markdown('Upload your picture in the box below, or take a picture with your phone')
 
 #upload a picture
-st.markdown('Upload a file')
-uploaded_file = st.file_uploader("Choose a file")
+uploaded_file = st.file_uploader("Upload a file")
 if uploaded_file is not None:
     # To read file as bytes:
     bytes_data = uploaded_file.getvalue()
@@ -68,8 +67,6 @@ if uploaded_file is not None:
     dataframe = pd.read_csv(uploaded_file)
     st.write(dataframe)
 
-
-st.markdown('take a picture')
 #take a picture
 img_file_buffer = st.camera_input("Take a picture")
 
