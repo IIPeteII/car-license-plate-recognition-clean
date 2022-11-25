@@ -39,7 +39,9 @@ st.image(app_image, caption='Credits to https://unsplash.com/@reinhartjulian for
 
 #header for the project
 st.header('Detecting license plates and returning an image of the car')
-st.text('A ')
+st.text('An app that regonizes and detects license plates in images, then return an image of the car model.')
+st.text('The app takes the license plate string and searches for it in the Danish license plate database, which then returns the make & model.')
+st.text('Thereafter, the app goes through a large dataset of car models and returns an image of the car, if the car is not in the dataset - a google search is performed.')
 
 #------------ License plate detection
 st.subheader('license plate detection model')
