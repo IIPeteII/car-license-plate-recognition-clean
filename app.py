@@ -1,3 +1,5 @@
+#This app ties together all our work
+
 #------------ Import libraries
 
 #COMMON
@@ -26,10 +28,20 @@ from keras import optimizers #model optimizers such as Adam and learning rates
 #Deployment
 import streamlit as st #app deployment
 
+#Introduction
+
+st.title('DSBA 2022 - Car number plate detection')
+st.header('detecting license plates and returning an image of the car')
+
+
 #------------ License plate detection
+st.markdown('license plate detection model')
 
 #------------ API-integration to database
+st.markdown('API-call from Danish license plate database')
 
 #------------ Picture database output
+st.markdown('Picture of car from dataset')
 
 #------------ Google search
+st.markdown('Link to google of car')
