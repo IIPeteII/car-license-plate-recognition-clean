@@ -33,7 +33,7 @@ import streamlit as st #app deployment
 st.title('DSBA - Exam project')
 
 #image of a cool car
-image_url = requests.get('https://raw.githubusercontent.com/IIPeteII/car-license-plate-recognition-clean/main/app-images/app_lambo_front.jpg')
+image_url = requests.get('https://raw.githubusercontent.com/IIPeteII/car-license-plate-recognition-clean/main/app-images/app_lambo.jpg')
 app_image = Image.open(BytesIO(image_url.content))
 st.image(app_image, caption='Credits to https://unsplash.com/@reinhartjulian for the picture')
 
