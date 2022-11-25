@@ -19,7 +19,7 @@ from PIL import Image #open pictures
 #import datetime #dates and time stuff
 
 #ML/Computer Vision
-import cv2 #computer vision
+import cv2
 #import tensorflow as tf #tensorflow
 #from keras.preprocessing.image import ImageDataGenerator #generate
 #from keras.models import Sequential #sequential model
