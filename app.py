@@ -12,7 +12,7 @@ import http.client #API
 import os #operating system functions
 #from selenium import webdriver #google search
 #import chromedriver_autoinstaller #chrome driver to open a browser
-#from PIL import image #open pictures
+from PIL import image #open pictures
 #from pathlib import Path #path function
 #from scipy.io import loadmat #load .mat files
 #import datetime #dates and time stuff
@@ -31,6 +31,7 @@ import streamlit as st #app deployment
 #Introduction
 
 st.title('Car number plate detection')
+app_image = Image.open('app-images\app_lambo_front.jpg')
 st.image('C:\Users\Peter\Documents\GitHub\car-license-plate-recognition-clean\app-images\app_lambo_front.jpg', caption='Credits to https://unsplash.com/@reinhartjulian for the picture')
 st.header('Detecting license plates and returning an image of the car')
 
