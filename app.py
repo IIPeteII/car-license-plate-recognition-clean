@@ -12,8 +12,6 @@ import io #Buffers for DF's
 from io import BytesIO
 import http.client #API
 import os #operating system functions
-#from selenium import webdriver #google search
-#import chromedriver_autoinstaller #chrome driver to open a browser
 from PIL import Image #open pictures
 #from pathlib import Path #path function
 #from scipy.io import loadmat #load .mat files
@@ -32,12 +30,16 @@ import streamlit as st #app deployment
 
 #Introduction
 
-st.title('Car number plate detection')
+st.title('DSBA - Exam project')
+
+#image of a cool car
 image_url = requests.get('https://raw.githubusercontent.com/IIPeteII/car-license-plate-recognition-clean/main/app-images/app_lambo_front.jpg')
 app_image = Image.open(BytesIO(image_url.content))
 st.image(app_image, caption='Credits to https://unsplash.com/@reinhartjulian for the picture')
-st.header('Detecting license plates and returning an image of the car')
 
+#header for the project
+st.header('Detecting license plates and returning an image of the car')
+st.text('A ')
 
 #------------ License plate detection
 st.subheader('license plate detection model')
