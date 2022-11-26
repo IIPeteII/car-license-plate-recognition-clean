@@ -5,7 +5,7 @@
 #COMMON
 import pandas as pd #DF work
 import numpy as np #Functions
-#import matplotlib.pyplot as plt #Visualizations
+import matplotlib.pyplot as plt #Visualizations
 import requests
 import altair as alt #Visualizations
 import io #Buffers for DF's
