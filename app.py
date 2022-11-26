@@ -205,8 +205,7 @@ def segment_characters(image) :
 
     return char_list
 
-
-st.pyplot(char = segment_characters(plate_out))
+char = segment_characters(plate_out)
 
 
 #------------ API-integration to database
