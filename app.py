@@ -49,23 +49,24 @@ st.subheader('Input a picture')
 st.markdown('Upload your picture in the box below, or take a picture with your phone')
 
 #upload a picture
-uploaded_file = st.file_uploader("Upload a file")
+uploaded_file = st.file_uploader("Upload a file", type="jpg")
 if uploaded_file is not None:
     # To read file as bytes:
-    bytes_data = uploaded_file.getvalue()
-    st.write(bytes_data)
+    st.image(uploaded_file)
+    #bytes_data = uploaded_file.getvalue()
+    #st.write(bytes_data)
 
     # To convert to a string based IO:
-    stringio = StringIO(uploaded_file.getvalue().decode("utf-8"))
-    st.write(stringio)
+    #stringio = StringIO(uploaded_file.getvalue().decode("utf-8"))
+    #st.write(stringio)
 
     # To read file as string:
-    string_data = stringio.read()
-    st.write(string_data)
+    #string_data = stringio.read()
+    #st.write(string_data)
 
     # Can be used wherever a "file-like" object is accepted:
-    dataframe = pd.read_csv(uploaded_file)
-    st.write(dataframe)
+    #dataframe = pd.read_csv(uploaded_file)
+    #st.write(dataframe)
 
 #take a picture
 #img_file_buffer = st.camera_input("Take a picture")
