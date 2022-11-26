@@ -53,8 +53,8 @@ uploaded_file = st.file_uploader("Upload a file", type="jpg")
 if uploaded_file is not None:
     # To read file as bytes:
     st.image(uploaded_file, caption='Your uploaded picture')
-    #bytes_data = uploaded_file.getvalue()
-    #st.write(bytes_data)
+    bytes_data = uploaded_file.getvalue()
+    st.write(bytes_data)
 
     # To convert to a string based IO:
     #stringio = StringIO(uploaded_file.getvalue().decode("utf-8"))
