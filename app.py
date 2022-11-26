@@ -17,6 +17,7 @@ from PIL import Image #open pictures
 from pathlib import Path #path function
 from scipy.io import loadmat #load .mat files
 import datetime #dates and time stuff
+import json
 
 #ML/Computer Vision
 import cv2 #computer vision
@@ -207,9 +208,102 @@ def segment_characters(image) :
 
 char = segment_characters(plate_out)
 
+#create fit parameters
+train_datagen = ImageDataGenerator(rescale=1./255, width_shift_range=0.1, height_shift_range=0.1)
+train_generator = train_datagen.flow_from_directory(
+        'data/data/train',  # this is the target directory
+        target_size=(28,28),  # all images will be resized to 28x28
+        batch_size=1,
+        class_mode='categorical')
+
+validation_generator = train_datagen.flow_from_directory(
+        'data/data/val',  # this is the target directory
+        target_size=(28,28),  # all images will be resized to 28x28        batch_size=1,
+        class_mode='categorical')
+
+#model
+
+model = Sequential()
+model.add(Conv2D(32, (24,24), input_shape=(28, 28, 3), activation='relu', padding='same'))
+# model.add(Conv2D(32, (20,20), input_shape=(28, 28, 3), activation='relu', padding='same'))
+# model.add(Conv2D(32, (20,20), input_shape=(28, 28, 3), activation='relu', padding='same'))
+model.add(MaxPooling2D(pool_size=(2, 2)))
+model.add(Dropout(0.4))
+model.add(Flatten())
+model.add(Dense(128, activation='relu'))
+model.add(Dense(36, activation='softmax'))
+
+model.compile(loss='categorical_crossentropy', optimizer=optimizers.Adam(lr=0.00001), metrics=['accuracy'])
+
+#custom training callback
+class stop_training_callback(tf.keras.callbacks.Callback):
+  def on_epoch_end(self, epoch, logs={}):
+    if(logs.get('val_acc') > 0.992):
+      self.model.stop_training = True
+
+#logs
+log_dir="logs/fit/" + datetime.datetime.now().strftime("%Y%m%d-%H%M%S")
+tensorboard_callback = tf.keras.callbacks.TensorBoard(log_dir=log_dir, histogram_freq=1)
+
+
+#model training
+
+#CAREFUL THIS IS A LARGE PROCESS
+batch_size = 1
+callbacks = [tensorboard_callback, stop_training_callback()]
+model_history = model.fit(
+      train_generator,
+      steps_per_epoch = train_generator.samples // batch_size,
+      validation_data = validation_generator, 
+      validation_steps = validation_generator.samples // batch_size,
+      epochs = 80)
+
+#print plate number
+
+def fix_dimension(img): 
+  new_img = np.zeros((28,28,3))
+  for i in range(3):
+    new_img[:,:,i] = img
+  return new_img
+  
+def show_results():
+    dic = {}
+    characters = '0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ'
+    for i,c in enumerate(characters):
+        dic[i] = c
+
+    output = []
+    for i,ch in enumerate(char): #iterating over the characters
+        img_ = cv2.resize(ch, (28,28))
+        img = fix_dimension(img_)
+        img = img.reshape(1,28,28,3) #preparing image for the model
+        y_ = np.argmax(model.predict(img)[0]) #predicting the class np.argmax(model.predict(x_test), axis=-1)     classes_ = np.argmax(y_, axis = 1)
+        character = dic[y_] #
+        output.append(character) #storing the result in a list
+        
+    plate_number = ''.join(output)
+    
+    return plate_number
+
+print(show_results())
+
+#show prediction
+
+plt.figure(figsize=(10,6))
+for i,ch in enumerate(char):
+    img = cv2.resize(ch, (28,28))
+    plt.subplot(3,4,i+1)
+    plt.imshow(img,cmap='gray')
+    plt.title(f'predicted: {show_results()[i]}')
+    plt.axis('off')
+plt.show()
 
 #------------ API-integration to database
 st.subheader('API-call from Danish license plate database')
+
+input_plate = print(show_results) #Create variable from model
+link = "/vehicles?registration_number={}".format(input_plate)
+print (link)
 
 #------------ Picture database output
 st.subheader('Picture of car from dataset')
