@@ -52,7 +52,7 @@ st.markdown('Upload your picture in the box below, or take a picture with your p
 uploaded_file = st.file_uploader("Upload a file", type="jpg")
 if uploaded_file is not None:
     # To read file as bytes:
-    st.image(uploaded_file)
+    st.image(uploaded_file, caption='Your uploaded picture')
     #bytes_data = uploaded_file.getvalue()
     #st.write(bytes_data)
 
