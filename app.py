@@ -148,9 +148,7 @@ plate_img_out, plate_out = extract_plate(dk_test_img)
 #------------ API-integration to database
 st.subheader('API-call from Danish license plate database')
 
-input_plate = print(show_results) #Create variable from model
-link = "/vehicles?registration_number={}".format(input_plate)
-print (link)
+
 
 #------------ Picture database output
 st.subheader('Picture of car from dataset')
