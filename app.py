@@ -70,7 +70,7 @@ if uploaded_file is not None:
     #st.write(dataframe)
 
 #take a picture
-#img_file_buffer = st.camera_input("Take a picture")
+img_file_buffer = st.camera_input("Take a picture")
 
 #if img_file_buffer is not None:
     # To read image file buffer with OpenCV:
