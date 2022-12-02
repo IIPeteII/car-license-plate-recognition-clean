@@ -59,7 +59,7 @@ if uploaded_file is not None:
     with NamedTemporaryFile(suffix="jpg") as temp:
         temp.write(uploaded_file.getvalue())
         temp.seek(0)
-        st.write(temp, caption = 'Your uploaded image')
+        st.write(temp)#, caption = 'Your uploaded image')
     # To read file as bytes:
     #bytes_data = uploaded_file.getvalue()
     #st.write(bytes_data)
