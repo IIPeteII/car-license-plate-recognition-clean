@@ -25,7 +25,6 @@ from tempfile import NamedTemporaryFile
 #ML/Computer Vision
 import cv2 #computer vision
 import tensorflow as tf #tensorflow
-from keras.preprocessing.image import load_img
 from keras.preprocessing.image import ImageDataGenerator #generate
 from keras.models import Sequential #sequential model
 from keras.layers import Dense, Flatten, MaxPooling2D, Dropout, Conv2D #model functions
@@ -54,13 +53,13 @@ st.subheader('Input a picture')
 st.markdown('Upload your picture in the box below, or take a picture with your phone')
 
 #upload a picture
-st.set_option('deprecation.showfileUploaderEncoding', False) #no encoding plz
+uploaded_file = st.file_uploader("Upload your picture (only .jpg)", type=["jpg"])
 
-image_buffer = st.file_uploader("Image here pl0x")
-temp_file = NamedTemporaryFile(delete=False)
-if image_buffer:
-    temp_file.write(image_buffer.getvalue())
-    st.write(load_img(temp_file.name))
+if uploaded_file is not None:
+    with NamedTemporaryFile(suffix="jpg") as temp:
+        temp.write(uploaded_file.getvalue())
+        temp.seek(0)
+        st.write(uploaded_file)
     # To read file as bytes:
     #bytes_data = uploaded_file.getvalue()
     #st.write(bytes_data)
