@@ -70,6 +70,8 @@ if uploaded_file is not None:
 #------------ License plate detection model
 st.subheader('License plate detection model')
 
+#create extraction function
+
 def extract_plate(img): # the function detects and perfors blurring on the number plate.
 	plate_img = img.copy()
 	
@@ -85,6 +87,11 @@ def extract_plate(img): # the function detects and perfors blurring on the numbe
 		cv2.rectangle(plate_img, (x,y), (x+w, y+h), (51,51,255), 3)
         
 	return plate_img, plate # returning the processed image.
+
+#Apply extraction function
+
+dk_test_img = cv2.imread(uploaded_file) #read file
+plate_img_out, plate_out = extract_plate(dk_test_img) #apply
 
 #Match contours
 
