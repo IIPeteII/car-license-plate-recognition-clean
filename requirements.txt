@@ -5,3 +5,4 @@ opencv-python-headless==4.6.0.66
 altair==4.2.0
 tensorflow-cpu==2.11.0
 matplotlib==3.6.2
+scipy
