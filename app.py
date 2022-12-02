@@ -54,22 +54,18 @@ st.markdown('Upload your picture in the box below, or take a picture with your p
 
 #upload a picture
 uploaded_file = st.file_uploader("Upload your picture (only .jpg)", type=["jpg"])
+if uploaded_file is not None:
+    # Display image
+    st.write("Original Image")
+    st.image(uploaded_file, caption="Uploaded Image")
 
-    # To read file as bytes:
-    #bytes_data = uploaded_file.getvalue()
-    #st.write(bytes_data)
+    # Convert image to cv2 format
+    file_bytes = np.asarray(bytearray(uploaded_file.read()), dtype=np.uint8)
+    opencv_image = cv2.imdecode(file_bytes, 1)
 
-    # To convert to a string based IO:
-    #stringio = StringIO(uploaded_file.getvalue().decode("utf-8"))
-    #st.write(stringio)
-
-    # To read file as string:
-    #string_data = stringio.read()
-    #st.write(string_data)
-
-    # Can be used wherever a "file-like" object is accepted:
-    #dataframe = pd.read_csv(uploaded_file)
-    #st.write(dataframe)
+    # opencv_image is now an array that can be processed with OpenCV
+    st.write("`type(opencv_image)`", type(opencv_image))
+    st.write("`opencv_image.shape`", opencv_image.shape)
 
 #take a picture
 #img_file_buffer = st.camera_input("Take a picture")
