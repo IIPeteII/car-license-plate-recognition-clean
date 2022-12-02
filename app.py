@@ -60,8 +60,8 @@ if uploaded_file is not None:
     st.image(uploaded_file, caption="Uploaded Image")
 
     # Convert image to cv2 format
-    file_bytes = np.asarray(bytearray(uploaded_file.read()), dtype=np.uint8)
-    opencv_image = cv2.imdecode(file_bytes, 1)
+    bytes_data = uploaded_file.getvalue()
+    opencv_image = cv2.imdecode(np.frombuffer(bytes_data, np.uint8), cv2.IMREAD_COLOR)
 
     # opencv_image is now an array that can be processed with OpenCV
     st.write("`type(opencv_image)`", type(opencv_image))
