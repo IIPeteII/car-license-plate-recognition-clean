@@ -67,25 +67,24 @@ if uploaded_file is not None:
     st.write("`type(opencv_image)`", type(opencv_image))
     st.write("`opencv_image.shape`", opencv_image.shape)
 
-#take a picture
-#img_file_buffer = st.camera_input("Take a picture")
-
-#if img_file_buffer is not None:
-    # To read image file buffer with OpenCV:
-    #bytes_data = img_file_buffer.getvalue()
-    #cv2_img = cv2.imdecode(np.frombuffer(bytes_data, np.uint8), cv2.IMREAD_COLOR)
-
-    # Check the type of cv2_img:
-    # Should output: <class 'numpy.ndarray'>
-    #st.write(type(cv2_img))
-
-    # Check the shape of cv2_img:
-    # Should output shape: (height, width, channels)
-    #st.write(cv2_img.shape)
-
 #------------ License plate detection model
 st.subheader('License plate detection model')
 
+def extract_plate(img): # the function detects and perfors blurring on the number plate.
+	plate_img = img.copy()
+	
+	#Loads the data required for detecting the license plates from cascade classifier.
+	plate_cascade = cv2.CascadeClassifier('indian_license_plate.xml')
+
+	# detects numberplates and returns the coordinates and dimensions of detected license plate's contours.
+	plate_rect = plate_cascade.detectMultiScale(plate_img, scaleFactor = 1.3, minNeighbors = 7)
+
+	for (x,y,w,h) in plate_rect:
+		plate = plate_img[y:y+h, x:x+w, :]
+		# finally representing the detected contours by drawing rectangles around the edges.
+		cv2.rectangle(plate_img, (x,y), (x+w, y+h), (51,51,255), 3)
+        
+	return plate_img, plate # returning the processed image.
 
 #Match contours
 
