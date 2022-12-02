@@ -56,7 +56,9 @@ st.markdown('Upload your picture in the box below, or take a picture with your p
 uploaded_file = st.file_uploader("Upload a file (only .jpg)", type=["jpg"])
 if uploaded_file is not None:
       with NamedTemporaryFile(suffix="jpg") as temp:
-        st.image(temp.show(), caption='Your uploaded picture')
+        temp.write(uploaded_file.getvalue())
+        temp.seek(0)
+        st.image(temp, caption='Your uploaded picture')
     # To read file as bytes:
     #bytes_data = uploaded_file.getvalue()
     #st.write(bytes_data)
