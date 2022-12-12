@@ -276,8 +276,15 @@ final_plate = show_results()
 print(final_plate)
 
 #show prediction
-
-
+fig = plt.figure(figsize=(10,6))
+for i,ch in enumerate(char):
+    img = cv2.resize(ch, (28,28))
+    plt.subplot(3,4,i+1)
+    plt.imshow(img,cmap='gray')
+    plt.title(f'predicted: {show_results()[i]}')
+    plt.axis('off')
+plt.show()
+st.pyplot(fig)
 
 #------------ API-integration to database
 st.subheader('API-call from Danish license plate database')
