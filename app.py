@@ -232,14 +232,14 @@ tensorboard_callback = tf.keras.callbacks.TensorBoard(log_dir=log_dir, histogram
 #model training
 
 #CAREFUL THIS IS A LARGE PROCESS
-batch_size = 1
-callbacks = [tensorboard_callback, stop_training_callback()]
-model_history = model.fit(
-      train_generator,
-      steps_per_epoch = train_generator.samples // batch_size,
-      validation_data = validation_generator, 
-      validation_steps = validation_generator.samples // batch_size,
-      epochs = 80)
+#batch_size = 1
+#callbacks = [tensorboard_callback, stop_training_callback()]
+#model_history = model.fit(
+#      train_generator,
+#      steps_per_epoch = train_generator.samples // batch_size,
+#      validation_data = validation_generator, 
+#      validation_steps = validation_generator.samples // batch_size,
+#      epochs = 80)
 
 #CAREFUL THIS IS A LARGE PROCESS
 
