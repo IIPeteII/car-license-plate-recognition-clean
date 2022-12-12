@@ -194,17 +194,52 @@ def segment_characters(image) :
 char = segment_characters(plate_out) #showing plates
 #create fit parameters
 
+train_datagen = ImageDataGenerator(rescale=1./255, width_shift_range=0.1, height_shift_range=0.1)
+train_generator = train_datagen.flow_from_directory(
+        r'data/data/train',  # this is the target directory
+        target_size=(28,28),  # all images will be resized to 28x28
+        batch_size=1,
+        class_mode='categorical')
+
+validation_generator = train_datagen.flow_from_directory(
+        r'data/data/val',  # this is the target directory
+        target_size=(28,28),  # all images will be resized to 28x28        
+        batch_size=1,
+        class_mode='categorical')
 
 
 #model
 
+model = Sequential()
+model.add(Conv2D(32, (24,24), input_shape=(28, 28, 3), activation='relu', padding='same'))
+model.add(MaxPooling2D(pool_size=(2, 2)))
+model.add(Dropout(0.4))
+model.add(Flatten())
+model.add(Dense(128, activation='relu'))
+model.add(Dense(36, activation='softmax'))
 
-
+model.compile(loss='categorical_crossentropy', optimizer=optimizers.Adam(learning_rate=0.00001), metrics=['accuracy'])
 #logs
 
+class stop_training_callback(tf.keras.callbacks.Callback):
+  def on_epoch_end(self, epoch, logs={}):
+    if(logs.get('val_acc') > 0.995):
+      self.model.stop_training = True
 
+log_dir="logs/fit/" + datetime.datetime.now().strftime("%Y%m%d-%H%M%S")
+tensorboard_callback = tf.keras.callbacks.TensorBoard(log_dir=log_dir, histogram_freq=1)
 
 #model training
+
+#CAREFUL THIS IS A LARGE PROCESS
+batch_size = 1
+callbacks = [tensorboard_callback, stop_training_callback()]
+model_history = model.fit(
+      train_generator,
+      steps_per_epoch = train_generator.samples // batch_size,
+      validation_data = validation_generator, 
+      validation_steps = validation_generator.samples // batch_size,
+      epochs = 80)
 
 #CAREFUL THIS IS A LARGE PROCESS
 
@@ -212,7 +247,33 @@ char = segment_characters(plate_out) #showing plates
 
 #print plate number
 
+def fix_dimension(img): 
+  new_img = np.zeros((28,28,3))
+  for i in range(3):
+    new_img[:,:,i] = img
+  return new_img
+  
+def show_results():
+    dic = {}
+    characters = '0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ'
+    for i,c in enumerate(characters):
+        dic[i] = c
 
+    output = []
+    for i,ch in enumerate(char): #iterating over the characters
+        img_ = cv2.resize(ch, (28,28))
+        img = fix_dimension(img_)
+        img = img.reshape(1,28,28,3) #preparing image for the model
+        y_ = np.argmax(model.predict(img)[0]) #predicting the class np.argmax(model.predict(x_test), axis=-1)     classes_ = np.argmax(y_, axis = 1)
+        character = dic[y_] #
+        output.append(character) #storing the result in a list
+        
+    plate_number = ''.join(output)
+    
+    return plate_number
+
+final_plate = show_results()
+print(final_plate)
 
 #show prediction
 
