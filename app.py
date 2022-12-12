@@ -191,7 +191,7 @@ def segment_characters(image) :
 
     return char_list
 
-
+char = segment_characters(plate_out) #showing plates
 #create fit parameters
 
 
