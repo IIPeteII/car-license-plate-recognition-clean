@@ -90,7 +90,9 @@ def extract_plate(img): # the function detects and perfors blurring on the numbe
 
 #Apply extraction function
 
-dk_test_img = cv2.imread(opencv_image) #read file
+#dk_test_img = cv2.imread(opencv_image) #read file
+test_bytes_data = uploaded_file.getvalue()
+dk_test_img = cv2.imdecode(np.frombuffer(test_bytes_data, np.uint8), cv2.IMREAD_COLOR) #read file
 plate_img_out, plate_out = extract_plate(dk_test_img) #apply
 
 #Match contours
