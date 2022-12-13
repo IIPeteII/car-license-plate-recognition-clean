@@ -335,3 +335,10 @@ st.subheader('Picture of car from dataset')
 #------------ Google search
 st.subheader('Link to google of car')
 #st.button('press here to see the car')
+
+def google_search(url):
+  url = url.replace(' ', '+')
+  link = "https://www.google.com/search?tbm=isch&q=" + url
+  return link
+
+google_search(car_type)
