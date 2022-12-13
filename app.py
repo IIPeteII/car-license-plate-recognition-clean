@@ -341,4 +341,4 @@ def google_search(url):
   link = "https://www.google.com/search?tbm=isch&q=" + url
   return link
 
-google_search(car_type)
+st.write(google_search(car_type))
