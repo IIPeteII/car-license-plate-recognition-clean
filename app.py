@@ -23,6 +23,7 @@ import json
 from tempfile import NamedTemporaryFile
 
 #ML/Computer Vision
+import pickle
 import cv2 #computer vision
 import tensorflow as tf #tensorflow
 from keras.preprocessing.image import ImageDataGenerator #generate
