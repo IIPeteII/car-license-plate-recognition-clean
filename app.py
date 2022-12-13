@@ -286,6 +286,7 @@ st.pyplot(fig)
 #------------ API-integration to database
 st.subheader('API-call from Danish license plate database')
 
+#api-script
 final_plate #Create variable from model
 link = "/vehicles?registration_number={}".format(final_plate)
 print (link)
@@ -300,7 +301,19 @@ res = conn.getresponse()
 data = res.read()
 print(data.decode("utf-8"))
 
+#transform to JSOn
 
+my_json = data.decode('utf8').replace("'", '"')
+print(my_json)
+print('- ' * 20)
+
+# Load the JSON to a Python list & dump it back out as formatted JSON
+data = json.loads(my_json)
+s = json.dumps(data, indent=4, sort_keys=True)
+
+#create dictionary
+
+d1=dict(enumerate(data))
 
 #------------ Picture database output
 st.subheader('Picture of car from dataset')
