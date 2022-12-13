@@ -329,9 +329,6 @@ car_type = (f"{(data[0]['make'])} {(data[0]['model'])} {car_year}")
 car_type = car_type.lower()
 print(car_type)
 
-#------------ Picture database output
-st.subheader('Picture of car from dataset')
-
 #------------ Google search
 st.subheader('Link to google of car')
 #st.button('press here to see the car')
