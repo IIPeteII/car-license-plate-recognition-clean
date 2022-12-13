@@ -301,7 +301,7 @@ res = conn.getresponse()
 data = res.read()
 print(data.decode("utf-8"))
 
-#transform to JSOn
+#transform to JSON
 
 my_json = data.decode('utf8').replace("'", '"')
 print(my_json)
@@ -314,6 +314,20 @@ s = json.dumps(data, indent=4, sort_keys=True)
 #create dictionary
 
 d1=dict(enumerate(data))
+
+#return car type
+car_type = (f"{(data[0]['make'])} {(data[0]['model'])} {(data[0]['first_registration'])}")
+
+#return car year
+car_year = data[0]['first_registration']
+car_year2 = car_year[:4]
+car_year = car_year2
+
+#final car_type
+
+car_type = (f"{(data[0]['make'])} {(data[0]['model'])} {car_year}")
+car_type = car_type.lower()
+print(car_type)
 
 #------------ Picture database output
 st.subheader('Picture of car from dataset')
