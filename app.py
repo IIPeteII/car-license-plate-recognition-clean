@@ -242,10 +242,6 @@ model_history = model.fit(
       validation_steps = validation_generator.samples // batch_size,
       epochs = 80)
 
-#CAREFUL THIS IS A LARGE PROCESS
-
-
-
 #print plate number
 
 def fix_dimension(img): 
@@ -289,6 +285,20 @@ st.pyplot(fig)
 
 #------------ API-integration to database
 st.subheader('API-call from Danish license plate database')
+
+final_plate #Create variable from model
+link = "/vehicles?registration_number={}".format(final_plate)
+print (link)
+
+conn = http.client.HTTPSConnection("v1.motorapi.dk")
+payload = ''
+headers = {
+  'X-AUTH-TOKEN': 'gq59xnw6jombh3vpiuvv0lzfh8h7df36'
+}
+conn.request("GET", link , payload, headers) #We add the link to automate the process of connecting the car plate number with the API
+res = conn.getresponse()
+data = res.read()
+print(data.decode("utf-8"))
 
 
 
