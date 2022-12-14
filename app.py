@@ -69,10 +69,12 @@ if uploaded_file is not None:
     st.write("`type(opencv_image)`", type(opencv_image))
     st.write("`opencv_image.shape`", opencv_image.shape)
 
+    elif "waiting for picture"
+
 #------------ License plate detection model
 st.subheader('License plate detection model')
 
-#create extraction function
+#create extraction function honestly don't know how much of this is needed
 
 def extract_plate(img): # the function detects and perfors blurring on the number plate.
 	plate_img = img.copy()
