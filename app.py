@@ -26,6 +26,7 @@ from tempfile import NamedTemporaryFile
 import pickle
 import cv2 #computer vision
 import tensorflow as tf #tensorflow
+from tensorflow import keras
 from keras.preprocessing.image import ImageDataGenerator #generate
 from keras.models import Sequential #sequential model
 from keras.layers import Dense, Flatten, MaxPooling2D, Dropout, Conv2D #model functions
@@ -195,52 +196,55 @@ def segment_characters(image) :
 char = segment_characters(plate_out) #showing plates
 #create fit parameters
 
-train_datagen = ImageDataGenerator(rescale=1./255, width_shift_range=0.1, height_shift_range=0.1)
-train_generator = train_datagen.flow_from_directory(
-        r'data/data/train',  # this is the target directory
-        target_size=(28,28),  # all images will be resized to 28x28
-        batch_size=1,
-        class_mode='categorical')
+#train_datagen = ImageDataGenerator(rescale=1./255, width_shift_range=0.1, height_shift_range=0.1)
+#train_generator = train_datagen.flow_from_directory(
+        #r'data/data/train',  # this is the target directory
+        #target_size=(28,28),  # all images will be resized to 28x28
+        #batch_size=1,
+        #class_mode='categorical')
 
-validation_generator = train_datagen.flow_from_directory(
-        r'data/data/val',  # this is the target directory
-        target_size=(28,28),  # all images will be resized to 28x28        
-        batch_size=1,
-        class_mode='categorical')
+#validation_generator = train_datagen.flow_from_directory(
+        #r'data/data/val',  # this is the target directory
+        #target_size=(28,28),  # all images will be resized to 28x28        
+        #batch_size=1,
+        #class_mode='categorical')
 
 
 #model
 
-model = Sequential()
-model.add(Conv2D(32, (24,24), input_shape=(28, 28, 3), activation='relu', padding='same'))
-model.add(MaxPooling2D(pool_size=(2, 2)))
-model.add(Dropout(0.4))
-model.add(Flatten())
-model.add(Dense(128, activation='relu'))
-model.add(Dense(36, activation='softmax'))
 
-model.compile(loss='categorical_crossentropy', optimizer=optimizers.Adam(learning_rate=0.00001), metrics=['accuracy'])
+model = keras.models.load_model(r'Model')
+
+#model = Sequential()
+#model.add(Conv2D(32, (24,24), input_shape=(28, 28, 3), activation='relu', padding='same'))
+#model.add(MaxPooling2D(pool_size=(2, 2)))
+#model.add(Dropout(0.4))
+#model.add(Flatten())
+#model.add(Dense(128, activation='relu'))
+#model.add(Dense(36, activation='softmax'))
+
+#model.compile(loss='categorical_crossentropy', optimizer=optimizers.Adam(learning_rate=0.00001), metrics=['accuracy'])
 #logs
 
-class stop_training_callback(tf.keras.callbacks.Callback):
-  def on_epoch_end(self, epoch, logs={}):
-    if(logs.get('val_acc') > 0.995):
-      self.model.stop_training = True
+#class stop_training_callback(tf.keras.callbacks.Callback):
+  #def on_epoch_end(self, epoch, logs={}):
+    #if(logs.get('val_acc') > 0.995):
+      #self.model.stop_training = True
 
-log_dir="logs/fit/" + datetime.datetime.now().strftime("%Y%m%d-%H%M%S")
-tensorboard_callback = tf.keras.callbacks.TensorBoard(log_dir=log_dir, histogram_freq=1)
+#log_dir="logs/fit/" + datetime.datetime.now().strftime("%Y%m%d-%H%M%S")
+#tensorboard_callback = tf.keras.callbacks.TensorBoard(log_dir=log_dir, histogram_freq=1)
 
 #model training
 
 #CAREFUL THIS IS A LARGE PROCESS
-batch_size = 1
-callbacks = [tensorboard_callback, stop_training_callback()]
-model_history = model.fit(
-      train_generator,
-      steps_per_epoch = train_generator.samples // batch_size,
-      validation_data = validation_generator, 
-      validation_steps = validation_generator.samples // batch_size,
-      epochs = 80)
+#batch_size = 1
+#callbacks = [tensorboard_callback, stop_training_callback()]
+#model_history = model.fit(
+      #train_generator,
+      #steps_per_epoch = train_generator.samples // batch_size,
+      #validation_data = validation_generator, 
+      #validation_steps = validation_generator.samples // batch_size,
+      #epochs = 80)
 
 #print plate number
 
